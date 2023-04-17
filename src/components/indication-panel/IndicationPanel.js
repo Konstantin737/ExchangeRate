@@ -1,43 +1,42 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import './IndicationPanel.css'
 
-const IndicationPanel = ({itemData, clearInput, setClearInput}) => {
-   let placeholder;
-   let enteredNumber;
-   let [result, setResult] = useState('Готов к конвертации.');
+let enteredNumber = '';
 
-   if(itemData === '') {
-      placeholder='Не выбрана валюта';
-      enteredNumber = '';
-   } else {
-      placeholder='Введите кол-во';
-   };
+const IndicationPanel = ({itemData}) => {
+   let placeholder=`Введите кол-во`;
+   let [result, setResult] = useState(0);
+
+   useMemo(()=>{
+      if(itemData !== '') {
+         setResult((+enteredNumber * ((itemData.Value)/itemData.Nominal)).toFixed(2) + ' RUB');
+      };
+   }, [itemData]);
 
 
    const searchUser = (e) => {
-      setClearInput(false);
-      enteredNumber = e.target.value;
-      if(itemData === '') {
-         setResult('Выберете валюту');
+      if(e.target.value < 0) {
+         enteredNumber = Math.abs(e.target.value)
+         setResult((enteredNumber * ((itemData.Value)/itemData.Nominal)).toFixed(2) + ' RUB');
       } else {
-         setResult((+enteredNumber * ((itemData.Value)/itemData.Nominal)).toFixed(2) + ' RUB');
+         enteredNumber = e.target.value;
+         setResult((enteredNumber * ((itemData.Value)/itemData.Nominal)).toFixed(2) + ' RUB');
       };
    };
 
-
    return (
-      <div className="indication_panel">
+      itemData&&<div className="indication_panel">
          {itemData === ''?'':<p style={{fontSize: '20px'}}>{`1 ${itemData.CharCode} = ${((itemData.Value)/itemData.Nominal).toFixed(2)} RUB`}</p>}
          <input 
             style={{padding: '5px', fontSize: '20px'}} 
             placeholder={placeholder} 
             type={'number'}
             onChange={searchUser}
-            value={clearInput===true?'':enteredNumber}>
+            value={enteredNumber}>
          </input>
          {itemData === ''?'':<p style={{fontSize: '20px'}}>{itemData.CharCode}</p>}
          <span style={{fontSize: '30px'}}>=</span>
-         <span style={{fontSize: '20px'}}>{clearInput===true?'0 RUB':result}</span>
+         <span style={{fontSize: '20px'}}>{result}</span>
       </div>
    );
 };

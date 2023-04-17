@@ -1,9 +1,9 @@
 import './App.css';
 import ButtonPanel from '../button-panel/ButtonPanel';
-// import IndicationPanel from '../indication-panel/IndicationPanel';
-// import IndicationPanelReverse from '../indication-panel-reverse/IndicationPanelReverse';
-import IndicationPanelTest from '../test-panel/IndicationPanelTest';
-import IndicationPanelReverseTest from '../test-panel/IndicationPanelReversTest';
+import IndicationPanel from '../indication-panel/IndicationPanel';
+import IndicationPanelReverse from '../indication-panel-reverse/IndicationPanelReverse';
+// import IndicationPanelTest from '../test-panel/IndicationPanelTest';
+// import IndicationPanelReverseTest from '../test-panel/IndicationPanelReversTest';
 import Header from '../header/Header';
 import { useState, useEffect } from 'react';
 
@@ -45,13 +45,13 @@ function App() {
   return (
     <div className="App">
       <Header/>
-      {!itemData&&<span style={{fontSize: '20px', marginBottom: '20px', color: 'red'}}>Выберете валюту для конвертации</span>}
+      {!isDataLoading&&!itemData&&<span className='message'>Выберете валюту для конвертации</span>}
       {isDataLoading === true
-      ?(<h1 style={{textAlign:'center', color: 'gray', margin: '30px'}}>Идет загрузка...</h1>)
+      ?(<span class="loader">Загрузка...</span>)
       :<ButtonPanel data={data.Valute} setupValute={setupValute} btnID = {btnID}/>
       }
-      <IndicationPanelTest itemData={itemData} clearInputTest={clearInputTest} setClearInputTest={setClearInputTest}/>
-      <IndicationPanelReverseTest itemData={itemData} clearInputTest={clearInputTest} setClearInputTest={setClearInputTest}/>
+      <IndicationPanel itemData={itemData} clearInputTest={clearInputTest} setClearInputTest={setClearInputTest}/>
+      <IndicationPanelReverse itemData={itemData} clearInputTest={clearInputTest} setClearInputTest={setClearInputTest}/>
     </div>
   );
 }

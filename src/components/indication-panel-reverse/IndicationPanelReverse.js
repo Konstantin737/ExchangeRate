@@ -1,24 +1,25 @@
-import { useState } from 'react';
-import './IndicationPanelReverse.css'
+import { useState, useMemo } from 'react';
+import '../indication-panel/IndicationPanel.css'
 
-const IndicationPanelReverse = ({itemData, clearInput, setClearInput}) => {
-   let placeholder;
-   let enteredNumber;
-   let [result, setResult] = useState('Готов к конвертации.');
+let enteredNumber = '';
 
-   if(itemData === '') {
-      placeholder='Не выбрана валюта';
-      enteredNumber = '';
-   } else {
-      placeholder=`Введите кол-во`;
-   };
+const IndicationPanelReverse = ({itemData}) => {
+   let placeholder=`Введите кол-во`;
+   let [result, setResult] = useState(0);
+
+   useMemo(()=>{
+      if(itemData !== '') {
+         setResult((+enteredNumber * (1/((itemData.Value)/itemData.Nominal))).toFixed(2) + ' ' + itemData.CharCode);
+      };
+   }, [itemData])
 
 
    const searchUser = (e) => {
-      setClearInput(false);
       enteredNumber = e.target.value;
       if(itemData === '') {
-         setResult('Выберете валюту');
+      } else if(e.target.value < 0) {
+         enteredNumber = Math.abs(e.target.value)
+         setResult((+enteredNumber * (1/((itemData.Value)/itemData.Nominal))).toFixed(2) + ' ' + itemData.CharCode);
       } else {
          setResult((+enteredNumber * (1/((itemData.Value)/itemData.Nominal))).toFixed(2) + ' ' + itemData.CharCode);
       };
@@ -26,18 +27,18 @@ const IndicationPanelReverse = ({itemData, clearInput, setClearInput}) => {
 
 
    return (
-      <div className="indication_panel">
+      itemData&&<div className="indication_panel">
          {itemData === ''?'':<p style={{fontSize: '20px'}}>{`1 RUB = ${(1/((itemData.Value)/itemData.Nominal)).toFixed(2)} ${itemData.CharCode}`}</p>}
          <input 
             style={{padding: '5px', fontSize: '20px'}} 
             placeholder={placeholder} 
             type={'number'}
             onChange={searchUser}
-            value={clearInput===true?'':enteredNumber}>
+            value={enteredNumber}>
          </input>
          {itemData === ''?'':<p style={{fontSize: '20px'}}>RUB</p>}
          <span style={{fontSize: '30px'}}>=</span>
-         <span style={{fontSize: '20px'}}>{clearInput===true?`0 ${itemData.CharCode}`:result}</span>
+         <span style={{fontSize: '20px'}}>{result}</span>
       </div>
    );
 };
