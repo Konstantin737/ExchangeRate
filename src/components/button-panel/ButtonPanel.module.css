@@ -1,0 +1,11 @@
+.btn_panel {
+   padding: 5px;
+   background-color: rgb(196 220 225);
+   width: 80%;
+   border-radius: 5px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.733);
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   flex-wrap: wrap;
+}

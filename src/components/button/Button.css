@@ -1,0 +1,35 @@
+.button {
+   background-color: rgb(255 255 255 / 46%);
+   border-radius: 5px;
+   border: none;
+   box-shadow: 0 0 10px rgb(0 0 0 / 27%);
+   margin: 3px;
+   padding: 10px;
+   align-items: center;
+   cursor: pointer;
+   height: 40px;
+   width: 250px;
+   display: flex;
+   justify-content: space-between;
+   text-align: start;
+}
+
+.disable_btn {
+   min-width: 15px;
+   height: 15px;
+   background-color: rgb(240, 40, 40);
+   margin-left: 10px;
+   border-radius: 50%;
+}
+
+.active_btn {
+   background-color: rgb(95, 241, 76);
+}
+
+.button:hover {
+   background-color: rgb(255 255 255 / 66%);
+}
+
+.button:active {
+   box-shadow:  none;
+}
