@@ -9,18 +9,18 @@ const IndicationPanel = ({itemData}) => {
 
    useMemo(()=>{
       if(itemData !== '') {
-         setResult((+enteredNumber * ((itemData.Value)/itemData.Nominal)).toFixed(2) + ' RUB');
+         setResult((enteredNumber * ((itemData.Value)/itemData.Nominal)).toFixed(2));
       };
    }, [itemData]);
 
 
    const searchUser = (e) => {
       if(e.target.value < 0) {
-         enteredNumber = Math.abs(e.target.value)
-         setResult((enteredNumber * ((itemData.Value)/itemData.Nominal)).toFixed(2) + ' RUB');
+         enteredNumber = Math.abs(e.target.value);
+         setResult((enteredNumber * ((itemData.Value)/itemData.Nominal)).toFixed(2));
       } else {
          enteredNumber = e.target.value;
-         setResult((enteredNumber * ((itemData.Value)/itemData.Nominal)).toFixed(2) + ' RUB');
+         setResult((enteredNumber * ((itemData.Value)/itemData.Nominal)).toFixed(2));
       };
    };
 
@@ -36,7 +36,7 @@ const IndicationPanel = ({itemData}) => {
          </input>
          {itemData === ''?'':<p style={{fontSize: '20px'}}>{itemData.CharCode}</p>}
          <span style={{fontSize: '30px'}}>=</span>
-         <span style={{fontSize: '20px'}}>{result}</span>
+         <span style={{fontSize: '20px'}}>{`${(Number(result)).toLocaleString()} RUB`}</span>
       </div>
    );
 };

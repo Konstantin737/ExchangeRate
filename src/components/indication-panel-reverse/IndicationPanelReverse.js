@@ -9,7 +9,7 @@ const IndicationPanelReverse = ({itemData}) => {
 
    useMemo(()=>{
       if(itemData !== '') {
-         setResult((+enteredNumber * (1/((itemData.Value)/itemData.Nominal))).toFixed(2) + ' ' + itemData.CharCode);
+         setResult((+enteredNumber * (1/((itemData.Value)/itemData.Nominal))).toFixed(2));
       };
    }, [itemData])
 
@@ -19,9 +19,9 @@ const IndicationPanelReverse = ({itemData}) => {
       if(itemData === '') {
       } else if(e.target.value < 0) {
          enteredNumber = Math.abs(e.target.value)
-         setResult((+enteredNumber * (1/((itemData.Value)/itemData.Nominal))).toFixed(2) + ' ' + itemData.CharCode);
+         setResult((+enteredNumber * (1/((itemData.Value)/itemData.Nominal))).toFixed(2));
       } else {
-         setResult((+enteredNumber * (1/((itemData.Value)/itemData.Nominal))).toFixed(2) + ' ' + itemData.CharCode);
+         setResult((+enteredNumber * (1/((itemData.Value)/itemData.Nominal))).toFixed(2));
       };
    };
 
@@ -38,7 +38,7 @@ const IndicationPanelReverse = ({itemData}) => {
          </input>
          {itemData === ''?'':<p style={{fontSize: '20px'}}>RUB</p>}
          <span style={{fontSize: '30px'}}>=</span>
-         <span style={{fontSize: '20px'}}>{result}</span>
+         <span style={{fontSize: '20px'}}>{`${(Number(result)).toLocaleString()} ${itemData.CharCode}`}</span>
       </div>
    );
 };
